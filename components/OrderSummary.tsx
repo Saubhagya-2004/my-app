@@ -52,7 +52,7 @@ export default function OrderSummary({ totals, itemCount }: OrderSummaryProps) {
 
             {/* Trust badges */}
             <div className="space-y-2">
-                {["🔒 Secure SSL Checkout", "🔄 Easy 30-day Returns", "🚚 Tracked Delivery"].map((b) => (
+                {[" Secure SSL Checkout", "🔄 Easy 30-day Returns", "🚚 Tracked Delivery"].map((b) => (
                     <p key={b} className="text-xs text-slate-600">{b}</p>
                 ))}
             </div>

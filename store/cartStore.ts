@@ -26,13 +26,12 @@ interface CartStore {
     shippingAddress: ShippingAddress | null;
     paymentMethod: PaymentMethod;
 
-    // Seed cart (only if empty)
     seedCart: (data: { cartItems: CartItem[]; shippingFee: number; discountApplied: number }) => void;
-    // Per-item actions
+  
     addItem: (product: Omit<CartItem, "quantity">) => void;
     removeItem: (productId: number) => void;
     updateQuantity: (productId: number, quantity: number) => void;
-    // Checkout actions
+
     setShippingAddress: (address: ShippingAddress) => void;
     setPaymentMethod: (method: PaymentMethod) => void;
     resetOrder: () => void;
@@ -45,7 +44,6 @@ export const useCartStore = create<CartStore>((set, get) => ({
     shippingAddress: null,
     paymentMethod: null,
 
-    /** Seeds the cart from SSR data — only when cart is completely empty */
     seedCart: (data) =>
         set((state) => {
             if (state.cartItems.length > 0) return state; // already has items — don't overwrite
@@ -56,7 +54,6 @@ export const useCartStore = create<CartStore>((set, get) => ({
             };
         }),
 
-    /** Add product — increments qty if already in cart */
     addItem: (product) =>
         set((state) => {
             const existing = state.cartItems.find((i) => i.product_id === product.product_id);
@@ -70,13 +67,11 @@ export const useCartStore = create<CartStore>((set, get) => ({
             return { cartItems: [...state.cartItems, { ...product, quantity: 1 }] };
         }),
 
-    /** Remove product entirely */
     removeItem: (productId) =>
         set((state) => ({
             cartItems: state.cartItems.filter((i) => i.product_id !== productId),
         })),
 
-    /** Update quantity — removes item if qty is set to 0 */
     updateQuantity: (productId, quantity) =>
         set((state) => ({
             cartItems:

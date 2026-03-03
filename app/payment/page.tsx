@@ -13,7 +13,7 @@ type PayMethod = "card" | "upi" | "cod";
 const METHODS: { id: PayMethod; icon: string; label: string; desc: string }[] = [
     { id: "card", icon: "💳", label: "Credit / Debit Card", desc: "Visa, Mastercard, RuPay" },
     { id: "upi", icon: "📱", label: "UPI", desc: "GPay, PhonePe, Paytm" },
-    { id: "cod", icon: "🏠", label: "Cash on Delivery", desc: "Pay when it arrives" },
+    { id: "cod", icon: "🏚️", label: "Cash on Delivery", desc: "Pay when it arrives" },
 ];
 
 export default function PaymentPage() {
