@@ -1,25 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
-import { useCartStore, CartItem } from "@/store/cartStore";
-
-interface CartInitializerProps {
-    cartItems: CartItem[];
-    shippingFee: number;
-    discountApplied: number;
-}
-
 /**
- * Seeds the Zustand store from SSR-fetched data.
- * Uses seedCart which only fills the store if it's currently empty —
- * so items added via "Add to Cart" on the products page are preserved.
+ * This component intentionally does NOT seed the cart anymore.
+ * Cart items are only added when the user explicitly clicks "Add to Cart"
+ * on the /products page. The SSR fetch in page.tsx still runs (demonstrating
+ * server-side data fetching) but the cart itself starts empty.
  */
-export default function CartInitializer({ cartItems, shippingFee, discountApplied }: CartInitializerProps) {
-    const seedCart = useCartStore((s) => s.seedCart);
-
-    useEffect(() => {
-        seedCart({ cartItems, shippingFee, discountApplied });
-    }, []);
-
+export default function CartInitializer() {
     return null;
 }

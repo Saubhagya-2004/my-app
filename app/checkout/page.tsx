@@ -29,12 +29,8 @@ export default async function CheckoutPage() {
 
     return (
         <div className="page-bg min-h-screen px-4 py-8">
-            {/* Seed Zustand store from SSR data (no-op if cart already has items) */}
-            <CartInitializer
-                cartItems={data.cartItems}
-                shippingFee={data.shipping_fee}
-                discountApplied={data.discount_applied}
-            />
+            {/* SSR data fetched above — SSR badge shown in CheckoutContent */}
+            <CartInitializer />
 
             <div className="max-w-5xl mx-auto">
                 {/* Nav */}

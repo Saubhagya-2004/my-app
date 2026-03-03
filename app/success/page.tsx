@@ -36,7 +36,7 @@ export default function SuccessPage() {
                         ✅
                     </div>
                     <h1 className="text-3xl font-black tracking-tight bg-gradient-to-r from-eco to-brand bg-clip-text text-transparent mb-2">
-                        Order Confirmed! 🎉
+                        Order Placed Successfully!
                     </h1>
                     <p className="text-slate-400 text-sm text-center">Thank you for shopping sustainably. Your order is on its way!</p>
                 </div>
@@ -96,7 +96,7 @@ export default function SuccessPage() {
                        bg-gradient-to-r from-brand to-brand-dark shadow-[0_4px_16px_rgba(99,102,241,0.4)]
                        hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.55)] transition-all"
                     >
-                        🛍 Continue Shopping
+                         Continue Shopping
                     </Link>
                     {shippingAddress && (
                         <p className="text-center text-xs text-slate-600">
