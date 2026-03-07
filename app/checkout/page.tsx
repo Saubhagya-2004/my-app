@@ -1,8 +1,6 @@
 import CartInitializer from "./CartInitializer";
 import CheckoutContent from "./CheckoutContent";
 import StepIndicator from "@/components/StepIndicator";
-import CartBadge from "@/components/CartBadge";
-import Link from "next/link";
 import { headers } from "next/headers";
 import type { CartItem } from "@/store/cartStore";
 
@@ -29,41 +27,28 @@ export default async function CheckoutPage() {
 
     return (
         <div className="page-bg min-h-screen px-4 py-8">
-            {/* SSR data fetched above — SSR badge shown in CheckoutContent */}
             <CartInitializer />
-
             <div className="max-w-5xl mx-auto">
-                {/* Nav */}
-                <div className="flex justify-between items-center mb-4 animate-fade-up">
-                    <Link
-                        href="/"
-                        className="text-sm text-slate-400 border border-white/10 px-3.5 py-2 rounded-lg
-                       hover:border-white/20 hover:text-slate-200 transition-all"
-                    >
-                        ← Home
-                    </Link>
-                    <span className="text-xs text-slate-600 border border-white/8 px-3 py-1.5 rounded-full">
-                        🌿 Eco-certified products
-                    </span>
-                </div>
 
-                <h1 className="animate-fade-up delay-100 text-3xl font-black tracking-tight text-center mb-1">
-                    Your Cart
-                </h1>
-                <p className="animate-fade delay-100 text-slate-500 text-sm text-center mb-8">
-                    Review your items before checkout
-                </p>
+                {/* Page header */}
+                <div className="text-center mb-10 animate-fade-up">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-4 rounded-full text-xs font-bold uppercase tracking-wider
+                                    bg-green-50 border border-green-200 text-green-700">
+                        <span className="animate-leaf inline-block">🌿</span> Step 1 — Your Cart
+                    </div>
+                    <h1 className="text-3xl font-black tracking-tight text-gray-900 mb-2">
+                        Review Your Order
+                    </h1>
+                    <p className="text-gray-500 text-sm">Confirm your items before moving to delivery</p>
+                </div>
 
                 <StepIndicator currentStep={1} />
 
-                {/* Client component reads live Zustand store */}
                 <CheckoutContent
                     shippingFee={data.shipping_fee}
                     discountApplied={data.discount_applied}
                 />
             </div>
-
-            <CartBadge />
         </div>
     );
 }

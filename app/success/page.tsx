@@ -17,90 +17,117 @@ export default function SuccessPage() {
     const totals = calculateTotal(cartItems, shippingFee, discountApplied);
 
     useEffect(() => {
-        const t = setTimeout(() => setShowItems(true), 700);
+        const t = setTimeout(() => setShowItems(true), 600);
         return () => clearTimeout(t);
     }, []);
 
     const deliveryDate = new Date(Date.now() + 4 * 86400000).toLocaleDateString("en-IN", {
         weekday: "long", day: "numeric", month: "long", year: "numeric",
     });
-
     const payLabel = { card: "Credit / Debit Card", upi: "UPI", cod: "Cash on Delivery" }[paymentMethod ?? ""] ?? "Online Payment";
 
     return (
         <div className="page-bg min-h-screen flex items-center justify-center px-4 py-12">
             <div className="max-w-lg w-full">
-                {/* Icon */}
-                <div className="animate-pop flex flex-col items-center mb-8">
-                    <div className="w-24 h-24 rounded-full bg-eco/15 border-2 border-eco/40 flex items-center justify-center text-5xl shadow-[0_0_60px_rgba(16,185,129,0.25)] mb-5">
-                        ✅
+
+                {/* Success Icon */}
+                <div className="animate-pop flex flex-col items-center mb-10">
+                    <div className="relative mb-6">
+                        <div className="w-24 h-24 rounded-full bg-green-100 border-2 border-green-300 flex items-center justify-center text-4xl animate-glow">
+                            ✅
+                        </div>
+                        <span className="absolute inset-0 rounded-full border-2 border-green-400 pulse-ring" />
                     </div>
-                    <h1 className="text-3xl font-black tracking-tight bg-gradient-to-r from-eco to-brand bg-clip-text text-transparent mb-2">
-                        Order Placed Successfully!
+                    <h1 className="text-3xl font-black tracking-tight text-gray-100 mb-2 text-center">
+                        Order Placed <span className="text-green-600">Successfully!</span>
                     </h1>
-                    <p className="text-slate-400 text-sm text-center">Thank you for shopping sustainably. Your order is on its way!</p>
+                    <p className="text-gray-500 text-sm text-center max-w-xs">
+                        Thank you for shopping sustainably. Your package is being prepared with care 🌿
+                    </p>
                 </div>
 
-                {/* Order card */}
-                <div className="animate-fade-up delay-200 rounded-2xl border border-white/10 bg-surface/70 backdrop-blur-xl p-7 mb-5">
-                    <div className="flex justify-between items-start mb-5">
+                {/* Order Card */}
+                <div className="animate-fade-up delay-200 rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden mb-5">
+                    {/* Card header */}
+                    <div className="px-7 py-5 flex justify-between items-center bg-gray-50 border-b border-gray-100">
                         <div>
-                            <p className="text-[10px] text-slate-600 uppercase tracking-widest mb-1">Order ID</p>
-                            <p className="font-black text-xl text-brand tracking-wide">#{orderId}</p>
+                            <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Order ID</p>
+                            <p className="font-black text-xl tracking-wide text-green-600">#{orderId}</p>
                         </div>
-                        <span className="px-3 py-1 rounded-full bg-eco/12 border border-eco/25 text-eco text-xs font-bold">
-                            ● Confirmed
+                        <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold
+                                         bg-green-100 border border-green-200 text-green-700">
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block animate-pulse" />
+                            Confirmed
                         </span>
                     </div>
 
-                    <div className="h-px bg-white/8 mb-5" />
-
-                    <div className="grid grid-cols-2 gap-4 mb-5">
-                        {[
-                            { label: "Estimated Delivery", value: deliveryDate },
-                            { label: "Payment Method", value: payLabel },
-                            { label: "Amount Paid", value: formatPrice(totals.total) },
-                            { label: "Deliver To", value: shippingAddress ? `${shippingAddress.city}, ${shippingAddress.state}` : "—" },
-                        ].map((d) => (
-                            <div key={d.label}>
-                                <p className="text-[10px] text-slate-600 uppercase tracking-widest mb-1">{d.label}</p>
-                                <p className="font-semibold text-sm text-slate-200">{d.value}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Items list */}
-                    {showItems && cartItems.length > 0 && (
-                        <div className="animate-fade-up">
-                            <div className="h-px bg-white/8 mb-4" />
-                            <p className="text-[10px] text-slate-600 uppercase tracking-widest mb-3">Items Ordered</p>
-                            <div className="space-y-2">
-                                {cartItems.map((item) => (
-                                    <div key={item.product_id} className="flex items-center gap-3">
-                                        <span className="px-1.5 py-0.5 rounded bg-brand/20 text-brand text-[10px] font-bold">×{item.quantity}</span>
-                                        <span className="text-sm text-slate-400 flex-1 truncate">{item.product_name}</span>
-                                        <span className="text-sm font-semibold text-slate-200">{formatPrice(item.product_price * item.quantity)}</span>
-                                    </div>
-                                ))}
-                            </div>
+                    <div className="p-7">
+                        {/* Details grid */}
+                        <div className="grid grid-cols-2 gap-x-6 gap-y-5 mb-6">
+                            {[
+                                { label: "Estimated Delivery", value: deliveryDate, icon: "📅" },
+                                { label: "Payment Method", value: payLabel, icon: "💳" },
+                                { label: "Amount Paid", value: formatPrice(totals.total), icon: "💰" },
+                                { label: "Deliver To", value: shippingAddress ? `${shippingAddress.city}, ${shippingAddress.state}` : "—", icon: "📍" },
+                            ].map((d) => (
+                                <div key={d.label}>
+                                    <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1 flex items-center gap-1">
+                                        <span>{d.icon}</span>{d.label}
+                                    </p>
+                                    <p className="font-semibold text-sm text-gray-700">{d.value}</p>
+                                </div>
+                            ))}
                         </div>
-                    )}
+
+                        {/* Full address */}
+                        {shippingAddress?.addressLine && (
+                            <div className="mb-6 p-3.5 rounded-xl bg-green-50 border border-green-100 flex items-start gap-3">
+                                <span className="text-green-600 text-sm mt-0.5">🏠</span>
+                                <div>
+                                    <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Full Address</p>
+                                    <p className="text-xs text-gray-600 leading-relaxed">
+                                        {shippingAddress.addressLine}, {shippingAddress.city}, {shippingAddress.state} — {shippingAddress.pinCode}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Items */}
+                        {showItems && cartItems.length > 0 && (
+                            <div className="animate-fade-up">
+                                <div className="h-px bg-gray-100 mb-5" />
+                                <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1">
+                                    <span>🛍️</span> Items Ordered
+                                </p>
+                                <div className="space-y-2">
+                                    {cartItems.map((item) => (
+                                        <div key={item.product_id} className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-50">
+                                            <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-green-100 text-green-700">×{item.quantity}</span>
+                                            <span className="text-sm text-gray-600 flex-1 truncate">{item.product_name}</span>
+                                            <span className="text-sm font-bold text-gray-900">{formatPrice(item.product_price * item.quantity)}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
-                {/* Actions */}
-                <div className="animate-fade-up delay-300 space-y-3">
+                {/* CTA */}
+                <div className="animate-fade-up delay-400 space-y-3">
                     <Link
-                        href="/"
+                        href="/checkout"
                         onClick={resetOrder}
                         className="flex justify-center items-center gap-2 w-full py-4 rounded-xl font-bold text-white
-                       bg-gradient-to-r from-brand to-brand-dark shadow-[0_4px_16px_rgba(99,102,241,0.4)]
-                       hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.55)] transition-all"
+                                   bg-green-600 hover:bg-green-700 transition-all shadow-[0_4px_16px_rgba(22,163,74,0.3)]
+                                   hover:-translate-y-0.5"
                     >
-                         Continue Shopping
+                        🌿 Continue Shopping
                     </Link>
                     {shippingAddress && (
-                        <p className="text-center text-xs text-slate-600">
-                            📧 Confirmation sent to <strong className="text-slate-400">{shippingAddress.email}</strong>
+                        <p className="text-center text-xs text-gray-400">
+                            📧 Confirmation sent to{" "}
+                            <strong className="text-gray-600">{shippingAddress.email}</strong>
                         </p>
                     )}
                 </div>

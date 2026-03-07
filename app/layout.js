@@ -17,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>{children}</body>
+      <body className={`${inter.variable} antialiased bg-gray-50`} style={{ backgroundColor: "#f9fafb" }}>{children}</body>
     </html>
   );
 }
